@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  // selector: '[app-servers]', // use as property
+  // selector: '.app-servers', // use as class
   selector: 'app-servers',
   // templateUrl: './servers.component.html', // using external template file
   // template for internal html
