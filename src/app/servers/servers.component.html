@@ -1,3 +1,6 @@
 <button class="btn btn-primary" [disabled]="!addNewServer">Add New Server</button>
+<p>{{addNewServer}}</p>
+<!-- You can also use propety binding instead of interpolation -->
+<p [innerText]="addNewServer"></p>
 <app-server></app-server>
 <app-server></app-server>
