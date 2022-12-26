@@ -1,6 +1,11 @@
-<button class="btn btn-primary" [disabled]="!addNewServer">Add New Server</button>
+<button 
+    class="btn btn-primary" 
+    [disabled]="!addNewServer"
+    (click)="onServerCreation()"
+    >Add New Server</button>
 <p>{{addNewServer}}</p>
 <!-- You can also use propety binding instead of interpolation -->
-<p [innerText]="addNewServer"></p>
+<!-- <p [innerText]="addNewServer"></p> -->
+<p>{{serverCreationStatus}}</p>
 <app-server></app-server>
 <app-server></app-server>
