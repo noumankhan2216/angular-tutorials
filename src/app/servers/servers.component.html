@@ -1,7 +1,11 @@
+<!-- <input 
+    type="text" 
+    class="form-control"
+    (input)="onUpdateServerName($event)"> -->
 <input 
     type="text" 
     class="form-control"
-    (input)="onUpdateServerName($event)">
+    [(ngModel)]="serverName">
 {{serverName}}
 <button 
     class="btn btn-primary" 
