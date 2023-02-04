@@ -14,6 +14,7 @@ import {
   OnDestroy,
   ViewChild,
   ElementRef,
+  ContentChild,
 } from '@angular/core';
 
 @Component({
@@ -40,11 +41,17 @@ export class ServerElementComponent
   };
   @Input() name!: string;
   @ViewChild('heading') header!: ElementRef;
+  @ContentChild('contentParagraph') paragraph!: ElementRef;
 
   constructor() {
     console.log('Constructor called!');
     // we can't access template ref variable in ngOninit bcz view is not loaded yet
     console.log('Header: ', this.header?.nativeElement.textContent);
+    // same for the contentParagraph
+    console.log(
+      'Content Paragraph: ',
+      this.paragraph?.nativeElement.textContent
+    );
   }
 
   ngOnInit(): void {
@@ -59,6 +66,11 @@ export class ServerElementComponent
   }
   ngAfterContentInit(): void {
     console.log('ngAfterContentInit called!');
+    // only view the child content when it's loaded in component template
+    console.log(
+      'Content Paragraph: ',
+      this.paragraph.nativeElement.textContent
+    );
   }
   ngAfterContentChecked(): void {
     console.log('ngAfterContentChecked called!');
