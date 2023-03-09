@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { ServersService } from '../servers.service';
 
@@ -12,6 +12,7 @@ export class EditServerComponent implements OnInit {
   server: { id: number; name: string; status: string; } | any;
   serverName: any;
   serverStatus: any;
+  allowEdit: Boolean = false;
 
   constructor(private serversService: ServersService, private rotue: ActivatedRoute) { 
   }
@@ -23,7 +24,11 @@ export class EditServerComponent implements OnInit {
     console.log(this.rotue.snapshot.fragment);
     // to make it reactive we would like to make it an observale 
     // so every time there is a change component will listen to it.
-    this.rotue.queryParams.subscribe();
+    this.rotue.queryParams.subscribe(
+      (queryParams: Params) => {
+        this.allowEdit = queryParams['allowEdit'] === '1'? true : false;
+      }
+    );
     this.rotue.fragment.subscribe();
     
     this.server = this.serversService.getServer(1);
