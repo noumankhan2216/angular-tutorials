@@ -18,12 +18,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     const customIntervalObervable = Observable.create( (observer: any) => {
       let count = 0;
       setInterval(()=>{
-        observer.next(count);
-        count++;
+        observer.next(count)
+        /* here complete error and next all three observer methods are called
+        complete is just commented out to let the error mothod happen */
+
+        // count === 2? observer.complete() : '';
+        count > 3? observer.error(new Error('Count is greater 3!')) : ''
+        count ++;
+        
       }, 1000)
     })
     this.firstObsSubsrcription = customIntervalObervable.subscribe((data:any)=>{
       console.log(data)
+    }, (err:any) => {
+      console.log(err);
+      alert(err.message)
     })
   }
   ngOnDestroy(): void {
