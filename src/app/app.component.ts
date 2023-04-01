@@ -10,7 +10,7 @@ export class AppComponent {
   suggestUserName() {
     const suggestedName = 'Superuser';
   }
-  submit(){
-    console.log('submitted')
+  submit(form: NgForm){
+    console.log(form)
   }
 }
