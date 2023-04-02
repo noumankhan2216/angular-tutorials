@@ -1,65 +1,18 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-        <div formGroupName="userData">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input
-              type="text"
-              id="username"
-              formControlName="username"
-              class="form-control">
-              <span
-                *ngIf="!signUpForm.get('userData.username')!.valid && signUpForm.get('userData.username')!.touched"
-                class="help-block">
-                <span *ngIf="!signUpForm.get('userData.username')?.hasError('nameIsForbidden')">
-                 This Name is invalid!
-                </span>
-                <span *ngIf="signUpForm.get('userData.username')?.hasError('required')">
-                  This field is required!
-                </span>
-              </span>
-          </div>
-          <div class="form-group">
-            <label for="email">email</label>
-            <input
-              type="text"
-              id="email"
-              formControlName="email"
-              class="form-control">
-              <span
-                *ngIf="!signUpForm.get('userData.email')!.valid && signUpForm.get('userData.email')!.touched"
-                class="help-block">
-                Please entera valid email!
-              </span>
-          </div>
-        </div>
-        <div class="radio" *ngFor="let gender of genders">
-          <label>
-            <input
-              type="radio"
-              formControlName="gender"
-              [value]="gender">{{ gender }}
-          </label>
-        </div>
-        <ng-container formArrayName="hobbies">
-          <h4>Your Hobbies</h4>
-          <button class="btn btn-default" type="button" (click)="onAddHobby()">
-            Add Hobby
-          </button>
-          <ng-container class="form-group"
-            *ngFor="let hobbyControl of hobbies.controls; let i = index">
-            <input type="text" class="form-control" [formControlName] ="i">
-          </ng-container>
-        </ng-container>
-        <span
-              *ngIf="!signUpForm.valid && signUpForm.touched"
-              class="help-block">
-              Please entera valid data!
-            </span>
-        <button class="btn btn-primary" type="submit">Submit</button>
-      </form>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let server of servers"
+          [ngClass]="getStatusClasses(server)">
+          <span
+            class="badge">
+            {{ server.status }}
+          </span>
+          <strong>{{ server.name }}</strong> | {{ server.instanceType }} | {{ server.started }}
+        </li>
+      </ul>
     </div>
   </div>
 </div>

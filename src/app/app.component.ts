@@ -1,74 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
-  genders = ['male', 'female'];
-  signUpForm!: FormGroup;
-  forbiddenUsernames = ['Chris', 'Anna'];
-
-  get hobbies(){
-    return this.signUpForm.controls['hobbies'] as FormArray;
-  }
-
-  ngOnInit(): void {
-      this.signUpForm = new FormGroup({
-        userData: new FormGroup({
-          username: new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
-          email: new FormControl(null, [Validators.required, Validators.email, this.forbiddenEmails], this.forbiddenEmails),
-        }),
-        gender: new FormControl('female'),
-        hobbies: new FormArray([])
-      }); 
-    // this.signUpForm.valueChanges.subscribe(
-    //   (change) => console.log(change)
-    // )
-    this.signUpForm.statusChanges.subscribe(
-      (status) => console.log(status)
-    )
-    this.signUpForm.setValue({
-      'userData': {
-        'username': 'Max',
-        'email': 'max@test.com'
-      },
-      'gender': 'male',
-      'hobbies': []
-    });
-    this.signUpForm.patchValue({
-      'userData': {
-        'username': 'Anna'
-      }
-    });
-  }
-  onSubmit(){
-    console.log(this.signUpForm);
-    this.signUpForm.reset();
-  }
-  onAddHobby(){
-    const control = new FormControl(null, Validators.required);
-    (<FormArray>this.signUpForm.get('hobbies')).push(control);
-  }
-
-  forbiddenNames(control: FormControl): {[s: string]: boolean}{
-    if(this.forbiddenUsernames.indexOf(control.value) ! == -1){
-      return {'nameIsForbidden': true};
+export class AppComponent {
+  servers = [
+    {
+      instanceType: 'medium',
+      name: 'Production Server',
+      status: 'stable',
+      started: new Date(15, 1, 2017)
+    },
+    {
+      instanceType: 'large',
+      name: 'User Database',
+      status: 'stable',
+      started: new Date(15, 1, 2017)
+    },
+    {
+      instanceType: 'small',
+      name: 'Development Server',
+      status: 'offline',
+      started: new Date(15, 1, 2017)
+    },
+    {
+      instanceType: 'small',
+      name: 'Testing Environment Server',
+      status: 'stable',
+      started: new Date(15, 1, 2017)
     }
-    return {'nameIsForbidden': false};
-  }
-
-  forbiddenEmails(control: AbstractControl): Promise<any> | Observable<any>  {
-      const promise = new Promise<any>((resolve, reject)=>{
-        console.log(control.value)
-      setTimeout(()=>{
-        resolve(control.value === 'test@test.com'? {'emailIsForbidden': true}: true);
-      },1500);
-    })
-    console.log(promise)
-    return promise;
+  ];
+  getStatusClasses(server: {instanceType: string, name: string, status: string, started: Date}) {
+    return {
+      'list-group-item-success': server.status === 'stable',
+      'list-group-item-warning': server.status === 'offline',
+      'list-group-item-danger': server.status === 'critical'
+    };
   }
 }
