@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit{
       this.signUpForm = new FormGroup({
         userData: new FormGroup({
           username: new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
-          email: new FormControl(null, [Validators.required, Validators.email]),
+          email: new FormControl(null, [Validators.required, Validators.email, this.forbiddenEmails], this.forbiddenEmails),
         }),
         gender: new FormControl('female'),
         hobbies: new FormArray([])
@@ -38,5 +39,16 @@ export class AppComponent implements OnInit{
       return {'nameIsForbidden': true};
     }
     return {'nameIsForbidden': false};
+  }
+
+  forbiddenEmails(control: AbstractControl): Promise<any> | Observable<any>  {
+      const promise = new Promise<any>((resolve, reject)=>{
+        console.log(control.value)
+      setTimeout(()=>{
+        resolve(control.value === 'test@test.com'? {'emailIsForbidden': true}: true);
+      },1500);
+    })
+    console.log(promise)
+    return promise;
   }
 }
