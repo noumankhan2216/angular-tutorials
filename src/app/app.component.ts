@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
     // Send Http request
     this.http
       .post(
-        'https://ng-complete-guide-c56d3.firebaseio.com/posts.json',
+        'https://angular-max-58b55-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json',
         postData
       )
       .subscribe(responseData => {
@@ -32,4 +32,5 @@ export class AppComponent implements OnInit {
   onClearPosts() {
     // Send Http request
   }
+
 }
