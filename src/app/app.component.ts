@@ -27,10 +27,17 @@ export class AppComponent implements OnInit {
 
   onFetchPosts() {
     // Send Http request
+    this.fetchPosts();
   }
 
   onClearPosts() {
     // Send Http request
+  }
+
+  private fetchPosts(){
+    this.http.get('https://angular-max-58b55-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json').subscribe(posts => {
+      console.log(posts)
+    })
   }
 
 }
