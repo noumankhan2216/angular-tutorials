@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +36,19 @@ export class AppComponent implements OnInit {
   }
 
   private fetchPosts(){
-    this.http.get('https://angular-max-58b55-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json').subscribe(posts => {
+    this.http.get('https://angular-max-58b55-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json')
+    .pipe(
+      map((responseData: any) => {
+      const postArray = [];
+      for (const key in responseData) {
+        if (responseData.hasOwnProperty(key)) {
+          postArray.push({ ...responseData[key], id: key});
+        }
+      }
+      return postArray;
+      })
+    )
+    .subscribe(posts => {
       console.log(posts)
     })
   }
