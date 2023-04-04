@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
+import { Post } from './post.model';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
   onCreatePost(postData: { title: string; content: string }) {
     // Send Http request
     this.http
-      .post(
+      .post<{name: string}>(
         'https://angular-max-58b55-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json',
         postData
       )
@@ -36,9 +37,9 @@ export class AppComponent implements OnInit {
   }
 
   private fetchPosts(){
-    this.http.get('https://angular-max-58b55-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json')
+    this.http.get<{[key: string]: Post}>('https://angular-max-58b55-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json')
     .pipe(
-      map((responseData: any) => {
+      map(( responseData ) => {
       const postArray = [];
       for (const key in responseData) {
         if (responseData.hasOwnProperty(key)) {
