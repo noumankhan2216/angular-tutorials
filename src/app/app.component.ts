@@ -12,6 +12,7 @@ import { PostsService } from './posts.service';
 export class AppComponent implements OnInit {
   loadedPosts: Post[] = [];
   isLoading: boolean = false;
+  error = null;
 
   constructor(private http: HttpClient, private service: PostsService) {}
 
@@ -46,6 +47,9 @@ export class AppComponent implements OnInit {
     .subscribe(posts => {
       this.isLoading = false;
       this.loadedPosts = posts;
+    }, error => {
+      this.error = error.message;
+      this.isLoading = false;
     })
   }
 
